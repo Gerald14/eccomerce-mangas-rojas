@@ -270,7 +270,9 @@ const removeProduct = () => {
 }
 
 const toPayCart = () => {
-
+    shoppingCart=[];
+    let mensaje = `Su compra se realizo con exito!`
+    alert(mensaje);
 }
 
 let isLogged = false;
