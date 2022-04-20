@@ -58,6 +58,17 @@
     flex-direction: column; }
     .filter__list li {
       list-style: none; }
+  .filter__button {
+    padding: .5rem; }
+    .filter__button button {
+      color: white;
+      border: none;
+      padding: .8rem 1.8rem;
+      background-color: #f9aa01;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 6px;
+      cursor: pointer; }
 
 .products {
   flex: 0 74%;
@@ -85,7 +96,7 @@
   .product__price {
     padding: .7rem 1rem;
     font-size: .8rem;
-    color: #b14939;
+    color: #d69407;
     font-weight: 600; }
 
 .product__title, .product__price {

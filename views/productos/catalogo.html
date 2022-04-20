@@ -42,7 +42,7 @@
             <div class="catalogo__content">
                 <div class="filter">
                     <div class="filter__content">
-                        <div class="filter_search">
+                        <div class="filter__search">
                             <input type="text" placeholder="Busqueda...">
                             <button type="submit" role="button"><img src="https://img.icons8.com/external-dreamstale-lineal-dreamstale/20/000000/external-search-ui-dreamstale-lineal-dreamstale.png"/></button>
                         </div>
@@ -51,34 +51,30 @@
                                     <ul class="filter__list">
                                         <li>
                                             <label class="form-check-label" for="flexCheckDefault">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <input class="filter__check" type="checkbox" value="" id="flexCheckDefault">
                                                 <span class="checkbox-custom-dummy"></span>
                                                 Todo
                                             </label>
-                                            <span class="list__filter-number">(18)</span>
+                                            <span class="list__filter-number">(14)</span>
                                         </li>
                                         <li>
                                           <label class="form-check-label" for="flexCheckDefault">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                            <input class="filter__check" type="checkbox" value="" id="flexCheckDefault">
                                             <span class="checkbox-custom-dummy"></span>
-                                            Vegetales
-                                          </label><span class="list__filter-number">(9)</span>
+                                            Norma
+                                          </label><span class="list__filter-number">(3)</span>
                                         </li>
                                         <li>
                                           <label class="form-check-label" for="flexCheckDefault">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                            <input class="filter__check" type="checkbox" value="" id="flexCheckDefault">
                                             <span class="checkbox-custom-dummy"></span>
-                                            Frutas
-                                          </label><span class="list__filter-number">(5)</span>
-                                        </li>
-                                        <li>
-                                          <label class="form-check-label" for="flexCheckDefault">
-                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                            <span class="checkbox-custom-dummy"></span>
-                                            Lacteos
-                                          </label><span class="list__filter-number">(8)</span>
+                                            Ivrea
+                                          </label><span class="list__filter-number">(11)</span>
                                         </li>
                                     </ul>
+                        </div>
+                        <div class="filter__button">
+                            <button onclick="filterProducts()">Filter</button>
                         </div>
                     </div>
                 </div>
@@ -86,7 +82,6 @@
                 <div class="products">
                     <div class="products__content">
                         <div class="products__list">
-
                         </div>
 
                         <div class="product__nav">

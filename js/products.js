@@ -16,9 +16,61 @@ const products = [
 
 ]
 
-const list = document.querySelector('.products__list')
+paintProducts(products);
 
 for(let product of products) {
+    const div = paintProduct(product)
+    list.appendChild(div)
+}
+
+
+function filterProducts(){
+    const list_filter = document.querySelectorAll('.filter__check')
+   console.log(list_filter)
+    list_filter.forEach((filter,index)=>{
+        switch (index) {
+            case 0:
+                if(filter.checked){
+                    console.log('all')
+                    
+                    cleanDiv();
+                    paintProducts(products);
+                }
+                break;
+            case 1:
+                if(filter.checked){
+                    console.log('norma')
+                    const newList = products.filter(product=>product.editorial=='Norma')
+                    cleanDiv();
+                    paintProducts(newList);
+                }
+                break;
+            case 2:
+                if(filter.checked){
+                    console.log('ivrea')
+                    const newList = products.filter(product=>product.editorial=='Ivrea')
+                    cleanDiv();
+                    paintProducts(newList);
+                }
+                 break;
+                    
+            default:
+                break;
+        }
+        
+    })
+}
+
+function paintProducts(products) {
+    const list = document.querySelector('.products__list')
+
+    for(let product of products) {
+        const div = paintProduct(product)
+        list.appendChild(div)
+    } 
+}
+
+function paintProduct(product){
     const div = document.createElement('div');
     div.className = "product";
     div.innerHTML = `
@@ -28,5 +80,14 @@ for(let product of products) {
         <div class="product__title">${product.name}</div>
         <div class="product__price">S/. ${product.price}</div>
     `
-    list.appendChild(div)
+    return div;
+}
+
+function cleanDiv(){
+    const list = document.querySelector('.products__list')
+
+    while (list.firstChild) {
+        list.removeChild(list.firstChild);
+    }
+    
 }

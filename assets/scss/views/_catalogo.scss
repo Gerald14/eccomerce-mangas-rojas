@@ -34,6 +34,20 @@
             list-style: none;
         }
     }
+
+    &__button {
+        padding: .5rem;
+        & button{
+            color: white;
+            border: none;
+            padding: .8rem 1.8rem;
+            background-color: #f9aa01;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    }
 }
 
 // PRODUCTS
@@ -72,7 +86,7 @@
     &__price{
         padding: .7rem 1rem;
         font-size: .8rem;
-        color:rgb(177, 73, 57);
+        color:#d69407;
         font-weight: 600;
     }
 }
