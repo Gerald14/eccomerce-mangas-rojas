@@ -1,0 +1,22 @@
+.navbar{
+    & ul{
+        list-style: none;
+    }
+
+
+    &__menu { 
+        display: flex;
+        gap: 1rem;
+        & li {
+    
+            & a {
+                text-decoration: none;
+                font-size: .9rem;
+                text-transform: uppercase;
+                font-family: 'Roboto', sans-serif;
+                color: white;
+            }
+        }
+    }
+
+}

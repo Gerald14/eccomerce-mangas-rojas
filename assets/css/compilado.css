@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400&family=Poppins:wght@500&display=swap");
+*, *::before, *::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0; }
+
+.navbar ul {
+  list-style: none; }
+
+.navbar__menu {
+  display: flex;
+  gap: 1rem; }
+  .navbar__menu li a {
+    text-decoration: none;
+    font-size: .9rem;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
+    color: white; }
+
+.banner h1 {
+  font-size: 1.8rem;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  padding: 1rem; }
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: .8rem 1.5rem;
+  background-color: #1d1427; }
