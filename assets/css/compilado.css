@@ -26,7 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../../assets/images/Banner/fondo.webp");
+  background-image: url("../../assets/images/Banner/fondo3.jpg");
   background-repeat: repeat;
   background-size: contain; }
   .banner h1 {
@@ -43,7 +43,7 @@
     left: 0;
     width: inherit;
     height: inherit;
-    background-color: #621b07;
+    background-color: #6e1e08;
     opacity: .9;
     z-index: 2; }
 
@@ -69,19 +69,24 @@
   flex: 0 26%; }
   .filter__title {
     font-size: 1rem;
-    font-family: 'Roboto', sans-serif; }
+    font-family: 'Roboto', sans-serif;
+    padding: 1rem .5rem;
+    font-weight: 500; }
   .filter__content {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    width: 70%; }
   .filter__search {
-    display: flex; }
+    display: flex;
+    width: 100%; }
     .filter__search input {
       border: none;
       background-color: #f2f3f2;
       padding: .6rem 1rem;
-      outline: none; }
+      outline: none;
+      width: inherit; }
     .filter__search button {
       border: none;
       background: #f2f3f2;
@@ -90,11 +95,15 @@
       display: flex;
       justify-content: center;
       align-items: center; }
+  .filter__categories {
+    width: 100%; }
   .filter__list {
     display: flex;
     flex-direction: column; }
     .filter__list li {
-      list-style: none; }
+      list-style: none;
+      display: flex;
+      justify-content: space-between; }
   .filter__button {
     padding: .5rem; }
     .filter__button button {

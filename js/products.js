@@ -16,12 +16,18 @@ const products = [
 
 ]
 
+const list = document.querySelector('.products__list');
+
 paintProducts(products);
 
 for(let product of products) {
     const div = paintProduct(product)
     list.appendChild(div)
 }
+
+const btnFilter = document.getElementById('btn-filter')
+console.log(btnFilter)
+btnFilter.addEventListener('click',filterProducts)
 
 
 function filterProducts(){
@@ -62,7 +68,7 @@ function filterProducts(){
 }
 
 function paintProducts(products) {
-    const list = document.querySelector('.products__list')
+   
 
     for(let product of products) {
         const div = paintProduct(product)

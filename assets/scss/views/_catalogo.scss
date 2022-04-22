@@ -17,6 +17,8 @@
     &__title{
         font-size: 1rem;
         font-family:'Roboto', sans-serif;
+        padding: 1rem .5rem;
+        font-weight: 500;
     }
 
     &__content{
@@ -24,16 +26,18 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        width: 70%;
     }
 
     &__search {
         display: flex;
-
+        width: 100%;
         input{
             border:none;
             background-color: #f2f3f2;
             padding: .6rem 1rem;
             outline: none;
+            width: inherit;
         }
 
         button{
@@ -47,12 +51,18 @@
         }
     }
 
+    &__categories{
+        width: 100%;
+    }
+
     &__list {
         display: flex;
         flex-direction: column;
 
         & li{
             list-style: none;
+            display: flex;
+            justify-content: space-between;
         }
     }
 
