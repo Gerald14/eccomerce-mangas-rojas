@@ -78,9 +78,14 @@
     flex-direction: column; }
   .products__list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
     grid-gap: 2rem;
     justify-content: space-evenly; }
+  .products__nav ul {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 1rem; }
 
 .product {
   margin: 1rem;
