@@ -26,6 +26,27 @@
         align-items: center;
     }
 
+    &__search {
+        display: flex;
+
+        input{
+            border:none;
+            background-color: #f2f3f2;
+            padding: .6rem 1rem;
+            outline: none;
+        }
+
+        button{
+            border: none;
+            background: #f2f3f2;
+            padding: 0 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
     &__list {
         display: flex;
         flex-direction: column;
