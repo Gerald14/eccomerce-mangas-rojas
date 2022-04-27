@@ -1,34 +1,28 @@
-const products = [
-    {id:1, name:'Tokyo Revengers 4', editorial:'Norma', price:72, img:'TR4.jpg'},
-    {id:2, name:'Tokyo Revengers 5', editorial:'Norma',  price:72, img:'TR5.jpg'},
-    {id:3, name:'Tokyo Revengers 6', editorial:'Norma',  price:72, img:'TR6.jpg'},
-    {id:4, name:'Chainsawman 1', editorial:'Ivrea',  price:25, img:'chainsawman01.jpg'},
-    {id:5, name:'Chainsawman 2', editorial:'Ivrea', price:25, img:'chainsawman02.jpg'},
-    {id:6, name:'Chainsawman 3', editorial:'Ivrea', price:25, img:'chainsawman03.jpg'},
-    {id:7, name:'Chainsawman 4', editorial:'Ivrea', price:25, img:'chainsawman04.jpg'},
-    {id:8, name:'Chainsawman 5', editorial:'Ivrea', price:25, img:'chainsawman05.jpg'},
-    {id:9, name:'Chainsawman 6', editorial:'Ivrea', price:25, img:'chainsawman06.jpg'},
-    {id:10, name:'Chainsawman 7', editorial:'Ivrea', price:25, img:'chainsawman07.jpg'},
-    {id:11, name:'Chainsawman 8', editorial:'Ivrea', price:25, img:'chainsawman08.jpg'},
-    {id:12, name:'Chainsawman 9', editorial:'Ivrea', price:25, img:'chainsawman09.jpg'},
-    {id:13, name:'Chainsawman 10', editorial:'Ivrea', price:25, img:'chainsawman10.jpg'},
-    {id:14, name:'Chainsawman 11', editorial:'Ivrea', price:25, img:'chainsawman11.jpg'},
-
-]
 
 const list = document.querySelector('.products__list');
+document.addEventListener('DOMContentLoaded',e => fetchData());
 
-paintProducts(products);
+const btnFilter = document.getElementById('btn-filter');
+const btnPay = document.getElementById('btn-pay');
 
-for(let product of products) {
-    const div = paintProduct(product)
-    list.appendChild(div)
+
+btnFilter.addEventListener('click',filterProducts);
+list.addEventListener('click', e => eventButtonProduct(e))
+// btnPay.addEventListener('click',addCartShopping);
+
+
+const fetchData = async() => {
+    try {
+        const res = await fetch('../../data/manga.json');
+        const data = await res.json();
+        console.log(res)
+        console.log(data)
+        paintProducts(data);
+        
+    } catch (error) {
+        console.log(error)
+    }
 }
-
-const btnFilter = document.getElementById('btn-filter')
-console.log(btnFilter)
-btnFilter.addEventListener('click',filterProducts)
-
 
 function filterProducts(){
     const list_filter = document.querySelectorAll('.filter__check')
@@ -85,6 +79,10 @@ function paintProduct(product){
         </div>
         <div class="product__title">${product.name}</div>
         <div class="product__price">S/. ${product.price}</div>
+        <div class="product__details">
+            <button class="btn btn-dark btn-view" data-id="${product.id}">View</button>
+            <button class="btn btn-dark btn-add" data-id="${product.id}">Add</button>
+        </div>
     `
     return div;
 }
@@ -96,4 +94,64 @@ function cleanDiv(){
         list.removeChild(list.firstChild);
     }
     
+}
+
+const eventButtonProduct = (e) => {
+    const currenTarget  = e.target;
+    const product = currenTarget.parentElement.parentElement;
+    console.log(product)
+    currenTarget.classList.contains('btn-add')&& addCart(product);
+
+}
+
+const addCart = (objectDiv) => {
+    
+    const product = {
+        "id": objectDiv.querySelector('.btn-add').dataset.id,
+        "name": objectDiv.querySelector('.product__title').textContent,
+        "price" : objectDiv.querySelector('.product__price').textContent,
+        "img" : objectDiv.querySelector('img').src
+    }
+    console.log(product)
+    addProductsToCart(product)
+    
+    // addHeaderCart({});
+}
+
+const addProductsToCart = (product) => {
+    const shopBody = document.querySelector('.shop__body')
+    const div = document.createElement('div');
+    div.classList = 'shop__item';
+    div.innerHTML = `
+        <div class="product-img">
+            <img src="${product.img}" alt="" srcset="">
+        </div>
+        <div class="product-details">
+            <strong>1</strong> x <span class="price">${product.price}</span>
+            <p class="product-name"><a href="#">${product.name}</a></p>
+        </div>
+        <div class="product-access">
+            <a class="btn-remove1" title="Eliminar este item" href="#">
+                <img src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/22/000000/external-delete-multimedia-kiranshastry-solid-kiranshastry.png"/>
+            </a>
+            <a class="btn-edit" title="Edit item" href="#">
+                <img src="https://img.icons8.com/metro/14/000000/edit.png"/>
+            </a> 
+        </div>
+    `
+    shopBody.appendChild(div)
+
+}
+
+function addHeaderCart({cantidad=0,total=0}){
+    const header_cart = document.querySelector('.shop__header');
+    const div = document.createElement('div');
+    let mensaje_total = cantidad > 0 ? cantidad > 1 ? cantidad+' productos':cantidad +' producto':'Su carrito esta vacio' 
+    let mensaje_price = total > 0 ? 'S/.--.--':`S/.${total}`
+    let resultado = 
+    `<div class="top-subtotal">${mensaje_total}, 
+        <span class="price">${mensaje_price}</span> 
+    </div>`;
+    div.innerHTML = resultado;
+    header_cart.append(div)
 }

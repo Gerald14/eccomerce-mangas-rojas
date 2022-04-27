@@ -1,6 +1,12 @@
 .navbar{
+
+    display: flex;
+    justify-content: space-between;
+
     & ul{
+        display: flex;
         list-style: none;
+        margin: 0!important;
     }
 
 
@@ -14,9 +20,21 @@
                 font-size: .9rem;
                 text-transform: uppercase;
                 font-family: 'Roboto', sans-serif;
-                color: white;
+                color: rgb(255, 255, 255);
             }
         }
     }
+
+    &__secondary {
+        display: flex;
+        align-items: center;
+        .btn{
+            padding: 0 1rem;
+        }
+
+        img{
+            width: 1.7rem;
+        }
+      }
 
 }

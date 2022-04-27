@@ -129,6 +129,11 @@
         color:#d69407;
         font-weight: 600;
     }
+
+    &__details{
+        display: flex;
+        justify-content: center;
+    }
 }
 
 .product__title,.product__price{

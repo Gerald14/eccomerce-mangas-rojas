@@ -1,0 +1,30 @@
+.shop__item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #e1e1e1;
+    padding: 1rem 0;
+}
+
+.product-img{
+    width: 7rem;
+}
+
+.product-img a, .product-img img{
+    width: inherit;
+}
+
+.product-access {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: .4rem;
+    height: 100%;
+    gap: .5rem;
+}
+
+.product-name>a{
+    color: #151515;
+    text-decoration: none;
+}
