@@ -18,10 +18,12 @@ const fetchData = async() => {
         console.log(res)
         console.log(data)
         paintProducts(data);
+        paintShoppingCart();
         
     } catch (error) {
         console.log(error)
     }
+    
 }
 
 function filterProducts(){
@@ -112,13 +114,18 @@ const addCart = (objectDiv) => {
         "price" : objectDiv.querySelector('.product__price').textContent,
         "img" : objectDiv.querySelector('img').src
     }
-    console.log(product)
+    const products = localStorage.getItem('listCart');
+    let list_products = products ? JSON.parse(products):[];
+    console.log(list_products)
+    list_products.push(product)
+    localStorage.setItem('listCart',JSON.stringify(list_products))
     addProductsToCart(product)
     
     // addHeaderCart({});
 }
 
 const addProductsToCart = (product) => {
+    
     const shopBody = document.querySelector('.shop__body')
     const div = document.createElement('div');
     div.classList = 'shop__item';
@@ -154,4 +161,14 @@ function addHeaderCart({cantidad=0,total=0}){
     </div>`;
     div.innerHTML = resultado;
     header_cart.append(div)
+}
+
+const paintShoppingCart = ()=>{
+    const products = localStorage.getItem('listCart');
+    let list_products = products ? JSON.parse(products):[];
+    if(products.length>0)
+    list_products.forEach((product)=>{
+        addProductsToCart(product)
+    })
+
 }

@@ -84,6 +84,13 @@
   color: #151515;
   text-decoration: none; }
 
+.offcanvas-footer {
+  display: inline-flex;
+  margin: 1rem; }
+
+button#btn-pay {
+  flex-grow: 1; }
+
 .header {
   display: flex;
   align-items: center;
@@ -189,7 +196,9 @@
     font-weight: 600; }
   .product__details {
     display: flex;
-    justify-content: center; }
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 0; }
 
 .product__title, .product__price {
   text-align: center; }
