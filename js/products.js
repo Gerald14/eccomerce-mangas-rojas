@@ -82,8 +82,10 @@ function paintProduct(product){
         <div class="product__title">${product.name}</div>
         <div class="product__price">S/. ${product.price}</div>
         <div class="product__details">
-            <button class="btn btn-dark btn-view" data-id="${product.id}">View</button>
-            <button class="btn btn-dark btn-add" data-id="${product.id}">Add</button>
+            <div class="product__details--btns">
+                <button class="btn btn-dark btn-view" data-id="${product.id}">View</button>
+                <button class="btn btn-dark btn-add" data-id="${product.id}">Add</button>
+            </div>
         </div>
     `
     return div;

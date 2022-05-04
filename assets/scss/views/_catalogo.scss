@@ -13,7 +13,7 @@
 
 // FILTER
 .filter{
-    flex:0 26%;
+    flex:0 22%;
     &__title{
         font-size: 1rem;
         font-family:'Roboto', sans-serif;
@@ -83,7 +83,7 @@
 
 // PRODUCTS
 .products{
-    flex:0 74%;
+    flex:0 78%;
     padding: 0 2rem 0 0;
     &__content{
         display: flex;
@@ -110,6 +110,10 @@
 .product{
     margin: 1rem;
     border: 1px solid #e1e1e1;
+    transition: 450ms all;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 
     & img{
         width: 100%;
@@ -131,10 +135,27 @@
     }
 
     &__details{
+        position: absolute;
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: 0.5rem;
         padding: 1rem 0;
+        opacity: 0;
+        background-color: rgba($color: #000000, $alpha: .25);
+        width: 100%;
+        height: 100%;
+    }
+
+    &:hover {
+        transform: scale(1.1);
+        z-index: 2;
+    }
+
+    &:hover &__details {
+        opacity: 1;
+        z-index: 5;
+        align-self: center;
     }
 }
 
