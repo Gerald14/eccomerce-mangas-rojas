@@ -4,10 +4,13 @@ document.addEventListener('DOMContentLoaded',e => fetchData());
 
 const btnFilter = document.getElementById('btn-filter');
 const btnPay = document.getElementById('btn-pay');
+// const btnRemove = document.querySelector('.btn-remove')
 
 
 btnFilter.addEventListener('click',filterProducts);
 list.addEventListener('click', e => eventButtonProduct(e))
+// btnRemove.addEventListener('click',e => removeProductOfCart(e))
+
 // btnPay.addEventListener('click',addCartShopping);
 
 
@@ -73,18 +76,19 @@ function paintProducts(products) {
 }
 
 function paintProduct(product){
+    const {id,img,name,price}=product;
     const div = document.createElement('div');
     div.className = "product";
     div.innerHTML = `
         <div class="product__figure">
-            <img src="../../assets/images/Mangas/${product.img}" alt="" />
+            <img src="../../assets/images/Mangas/${img}" alt="" />
         </div>
-        <div class="product__title">${product.name}</div>
-        <div class="product__price">S/. ${product.price}</div>
+        <div class="product__title">${name}</div>
+        <div class="product__price">S/. ${price}</div>
         <div class="product__details">
             <div class="product__details--btns">
-                <button class="btn btn-dark btn-view" data-id="${product.id}">View</button>
-                <button class="btn btn-dark btn-add" data-id="${product.id}">Add</button>
+                <button class="btn btn-dark btn-view" data-id="${id}">View</button>
+                <button class="btn btn-dark btn-add" data-id="${id}">Add</button>
             </div>
         </div>
     `
@@ -102,47 +106,64 @@ function cleanDiv(){
 
 const eventButtonProduct = (e) => {
     const currenTarget  = e.target;
-    const product = currenTarget.parentElement.parentElement;
+    const product = currenTarget.parentElement.parentElement.parentElement;
     console.log(product)
     currenTarget.classList.contains('btn-add')&& addCart(product);
 
 }
 
 const addCart = (objectDiv) => {
+    let onCart = false;
     
     const product = {
         "id": objectDiv.querySelector('.btn-add').dataset.id,
         "name": objectDiv.querySelector('.product__title').textContent,
         "price" : objectDiv.querySelector('.product__price').textContent,
-        "img" : objectDiv.querySelector('img').src
+        "img" : objectDiv.querySelector('img').src,
+        "cantidad":1
     }
     const products = localStorage.getItem('listCart');
-    let list_products = products ? JSON.parse(products):[];
-    console.log(list_products)
-    list_products.push(product)
+    let list_products = JSON.parse(products)||[];
+    let newlist=list_products.map((item)=>{
+        if (item.id===product.id) {
+            onCart=true;
+            console.log('producto en el carrito')
+            let json = {
+                ... product,
+                cantidad : item.cantidad+1 || 1
+            }
+            console.log(json)
+            return json;
+        }
+        return {...item}
+    })
+    console.log(newlist)
+    list_products = [...newlist]
+    !onCart && list_products.push(product)
     localStorage.setItem('listCart',JSON.stringify(list_products))
-    addProductsToCart(product)
+    onCart ? paintShoppingCart(): addProductsToCart(product)
     
     // addHeaderCart({});
 }
 
 const addProductsToCart = (product) => {
     
+    const {id,price,name,img,cantidad} = product;
     const shopBody = document.querySelector('.shop__body')
     const div = document.createElement('div');
     div.classList = 'shop__item';
     div.innerHTML = `
         <div class="product-img">
-            <img src="${product.img}" alt="" srcset="">
+            <img src="${img}" alt="" srcset="">
         </div>
         <div class="product-details">
-            <strong>1</strong> x <span class="price">${product.price}</span>
-            <p class="product-name"><a href="#">${product.name}</a></p>
+            <strong>${cantidad}</strong> x <span class="price">${price}</span>
+            <p class="product-name"><a href="#">${name}</a></p>
         </div>
         <div class="product-access">
-            <a class="btn-remove1" title="Eliminar este item" href="#">
+            <a class="btn-remove" data-id="${id} href="#">
                 <img src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/22/000000/external-delete-multimedia-kiranshastry-solid-kiranshastry.png"/>
-            </a>
+            </button>
             <a class="btn-edit" title="Edit item" href="#">
                 <img src="https://img.icons8.com/metro/14/000000/edit.png"/>
             </a> 
@@ -167,10 +188,17 @@ function addHeaderCart({cantidad=0,total=0}){
 
 const paintShoppingCart = ()=>{
     const products = localStorage.getItem('listCart');
-    let list_products = products ? JSON.parse(products):[];
+    const shopBody = document.querySelector('.shop__body')
+    shopBody.innerHTML='';
+    let list_products = JSON.parse(products)||[];
     if(products.length>0)
     list_products.forEach((product)=>{
         addProductsToCart(product)
     })
 
+}
+
+const removeProductOfCart= () => {
+    const currenTarget  = e.target;
+    console.log('e',currenTarget)
 }

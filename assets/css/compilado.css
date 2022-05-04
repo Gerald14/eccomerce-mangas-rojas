@@ -60,7 +60,7 @@
 
 .shop__item {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   border-bottom: 1px solid #e1e1e1;
   padding: 1rem 0; }
