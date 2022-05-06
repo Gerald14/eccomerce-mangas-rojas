@@ -109,7 +109,14 @@ const eventButtonProduct = (e) => {
     const product = currenTarget.parentElement.parentElement.parentElement;
     console.log(product)
     currenTarget.classList.contains('btn-add')&& addCart(product);
-
+    Toastify({
+        text: "Se agrego al carrito!!",
+        className: "info",
+        style: {
+          background: "linear-gradient(135deg, #ff7852 0, #ff634d 25%, #f94646 50%, #eb1f41 75%, #e0003f 100%)",
+        },
+        close:true
+      }).showToast();
 }
 
 const addCart = (objectDiv) => {
@@ -147,6 +154,7 @@ const addCart = (objectDiv) => {
 }
 
 const addProductsToCart = (product) => {
+    console.log('p',product)
     
     const {id,price,name,img,cantidad} = product;
     const shopBody = document.querySelector('.shop__body')
