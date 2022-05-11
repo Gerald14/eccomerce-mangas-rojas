@@ -1,12 +1,19 @@
-
+// Listas
 const list = document.querySelector('.products__list');
-document.addEventListener('DOMContentLoaded',e => fetchData());
-
+const listShop = document.querySelector('.shop__body');
+const headerShop = document.querySelector('.shop__header');
+//Templates
+const templateProduct = document.getElementById('template-product').content;
+const templateProductShop = document.getElementById('template-product-shop').content;
+const templateHeaderShop = document.getElementById('template-header-shop').content;
+const fragment = document.createDocumentFragment();
+//Botones
 const btnFilter = document.getElementById('btn-filter');
 const btnPay = document.getElementById('btn-pay');
 // const btnRemove = document.querySelector('.btn-remove')
 
-
+//Eventos
+document.addEventListener('DOMContentLoaded',e => fetchData());
 btnFilter.addEventListener('click',filterProducts);
 list.addEventListener('click', e => eventButtonProduct(e))
 // btnRemove.addEventListener('click',e => removeProductOfCart(e))
@@ -70,29 +77,21 @@ function paintProducts(products) {
    
 
     for(let product of products) {
-        const div = paintProduct(product)
-        list.appendChild(div)
+        const tmp = paintProduct(product)
+        fragment.appendChild(tmp)
     } 
+    list.appendChild(fragment)
 }
 
 function paintProduct(product){
     const {id,img,name,price}=product;
-    const div = document.createElement('div');
-    div.className = "product";
-    div.innerHTML = `
-        <div class="product__figure">
-            <img src="../../assets/images/Mangas/${img}" alt="" />
-        </div>
-        <div class="product__title">${name}</div>
-        <div class="product__price">S/. ${price}</div>
-        <div class="product__details">
-            <div class="product__details--btns">
-                <button class="btn btn-dark btn-view" data-id="${id}">View</button>
-                <button class="btn btn-dark btn-add" data-id="${id}">Add</button>
-            </div>
-        </div>
-    `
-    return div;
+
+    templateProduct.querySelector('img').setAttribute('src',`../../assets/images/Mangas/${img}`);
+    templateProduct.querySelector('.product__title').textContent = name;
+    templateProduct.querySelector('.product__price').textContent = price;
+
+    const clone = templateProduct.cloneNode(true);
+    return clone;
 }
 
 function cleanDiv(){
@@ -154,35 +153,21 @@ const addCart = (objectDiv) => {
 }
 
 const addProductsToCart = (product) => {
-    console.log('p',product)
     
     const {id,price,name,img,cantidad} = product;
-    const shopBody = document.querySelector('.shop__body')
-    const div = document.createElement('div');
-    div.classList = 'shop__item';
-    div.innerHTML = `
-        <div class="product-img">
-            <img src="${img}" alt="" srcset="">
-        </div>
-        <div class="product-details">
-            <strong>${cantidad}</strong> x <span class="price">${price}</span>
-            <p class="product-name"><a href="#">${name}</a></p>
-        </div>
-        <div class="product-access">
-            <a class="btn-remove" data-id="${id} href="#">
-                <img src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/22/000000/external-delete-multimedia-kiranshastry-solid-kiranshastry.png"/>
-            </button>
-            <a class="btn-edit" title="Edit item" href="#">
-                <img src="https://img.icons8.com/metro/14/000000/edit.png"/>
-            </a> 
-        </div>
-    `
-    shopBody.appendChild(div)
+    
+    templateProductShop.querySelector('img').setAttribute('src',img);
+    templateProductShop.querySelector('.product-details strong').textContent = cantidad;
+    templateProductShop.querySelector('.price').textContent = price;
+    templateProductShop.querySelector('.product-name a').textContent = name;
 
+    const clone = templateProductShop.cloneNode(true);
+    fragment.appendChild(clone)
+    listShop.appendChild(fragment)
 }
 
 function addHeaderCart({cantidad=0,total=0}){
-    const header_cart = document.querySelector('.shop__header');
+    
     const div = document.createElement('div');
     let mensaje_total = cantidad > 0 ? cantidad > 1 ? cantidad+' productos':cantidad +' producto':'Su carrito esta vacio' 
     let mensaje_price = total > 0 ? 'S/.--.--':`S/.${total}`

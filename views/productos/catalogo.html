@@ -138,6 +138,49 @@
             </div>
         </div>
     </aside>
+
+    <template id="template-product">
+        <div class="product">
+            <div class="product__figure">
+                <img src="" alt="" />
+            </div>
+            <div class="product__title">name</div>
+            <div class="product__price">price</div>
+            <div class="product__details">
+                <div class="product__details--btns">
+                    <button class="btn btn-dark btn-view">View</button>
+                    <button class="btn btn-dark btn-add">Add</button>
+                </div>
+            </div>
+        </div>
+    </template>
+        
+    <template id="template-header-shop">
+        <div class="top-subtotal">${mensaje_total}, 
+            <span class="price">${mensaje_price}</span> 
+        </div>
+    </template>
+
+    <template id="template-product-shop">
+        <div class="shop__item">
+            <div class="product-img">
+                <img src="${img}" alt="" srcset="">
+            </div>
+            <div class="product-details">
+                <strong>${cantidad}</strong> x <span class="price">${price}</span>
+                <p class="product-name"><a href="#">${name}</a></p>
+            </div>
+            <div class="product-access">
+                <a class="btn-remove" data-id="${id} href="#">
+                    <img src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/22/000000/external-delete-multimedia-kiranshastry-solid-kiranshastry.png"/>
+                </button>
+                <a class="btn-edit" title="Edit item" href="#">
+                    <img src="https://img.icons8.com/metro/14/000000/edit.png"/>
+                </a> 
+            </div>
+        </div>
+    </template>
+
     <footer>
 
     </footer>
