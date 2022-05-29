@@ -2,6 +2,7 @@
 const list = document.querySelector('.products__list');
 const listShop = document.querySelector('.shop__body');
 const headerShop = document.querySelector('.shop__header');
+let products = [];
 //Templates
 const templateProduct = document.getElementById('template-product').content;
 const templateProductShop = document.getElementById('template-product-shop').content;
@@ -26,6 +27,7 @@ const fetchData = async() => {
         
         const res = await fetch('../../data/manga.json');
         const data = await res.json();
+        products = data;
         paintProducts(data);
         paintShoppingCart();
         
@@ -39,6 +41,7 @@ function filterProducts(){
     const list_filter = document.querySelectorAll('.filter__check')
    console.log(list_filter)
     list_filter.forEach((filter,index)=>{
+        console.log('index',index)
         switch (index) {
             case 0:
                 if(filter.checked){
@@ -60,7 +63,7 @@ function filterProducts(){
                 if(filter.checked){
                     console.log('ivrea')
                     const newList = products.filter(product=>product.editorial=='Ivrea')
-                    cleanDiv();
+                    cleanDiv('.products__list');
                     paintProducts(newList);
                 }
                  break;
