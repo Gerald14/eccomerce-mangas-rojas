@@ -11,7 +11,7 @@ const fragment = document.createDocumentFragment();
 const btnFilter = document.getElementById('btn-filter');
 const btnPay = document.getElementById('btn-pay');
 // const btnRemove = document.querySelector('.btn-remove')
-
+console.log(templateHeaderShop)
 //Eventos
 document.addEventListener('DOMContentLoaded',e => fetchData());
 btnFilter.addEventListener('click',filterProducts);
@@ -23,10 +23,9 @@ list.addEventListener('click', e => eventButtonProduct(e))
 
 const fetchData = async() => {
     try {
+        
         const res = await fetch('../../data/manga.json');
         const data = await res.json();
-        console.log(res)
-        console.log(data)
         paintProducts(data);
         paintShoppingCart();
         
@@ -45,7 +44,7 @@ function filterProducts(){
                 if(filter.checked){
                     console.log('all')
                     
-                    cleanDiv();
+                    cleanDiv('.products__list');
                     paintProducts(products);
                 }
                 break;
@@ -53,7 +52,7 @@ function filterProducts(){
                 if(filter.checked){
                     console.log('norma')
                     const newList = products.filter(product=>product.editorial=='Norma')
-                    cleanDiv();
+                    cleanDiv('.products__list');
                     paintProducts(newList);
                 }
                 break;
@@ -75,7 +74,6 @@ function filterProducts(){
 
 function paintProducts(products) {
    
-
     for(let product of products) {
         const tmp = paintProduct(product)
         fragment.appendChild(tmp)
@@ -89,13 +87,15 @@ function paintProduct(product){
     templateProduct.querySelector('img').setAttribute('src',`../../assets/images/Mangas/${img}`);
     templateProduct.querySelector('.product__title').textContent = name;
     templateProduct.querySelector('.product__price').textContent = price;
+    templateProduct.querySelector('.btn-view').dataset.id = id;
+    templateProduct.querySelector('.btn-add').dataset.id = id;
 
     const clone = templateProduct.cloneNode(true);
     return clone;
 }
 
-function cleanDiv(){
-    const list = document.querySelector('.products__list')
+function cleanDiv(classDiv){
+    const list = document.querySelector(classDiv)
 
     while (list.firstChild) {
         list.removeChild(list.firstChild);
@@ -120,6 +120,7 @@ const eventButtonProduct = (e) => {
 
 const addCart = (objectDiv) => {
     let onCart = false;
+    let total = 0;
     
     const product = {
         "id": objectDiv.querySelector('.btn-add').dataset.id,
@@ -130,29 +131,27 @@ const addCart = (objectDiv) => {
     }
     const products = localStorage.getItem('listCart');
     let list_products = JSON.parse(products)||[];
-    let newlist=list_products.map((item)=>{
-        if (item.id===product.id) {
-            onCart=true;
-            console.log('producto en el carrito')
+    let newlist = list_products.map((item)=>{
+        if (item.id === product.id) {
+            onCart = true;
             let json = {
                 ... product,
                 cantidad : item.cantidad+1 || 1
             }
-            console.log(json)
             return json;
         }
         return {...item}
     })
-    console.log(newlist)
     list_products = [...newlist]
     !onCart && list_products.push(product)
     localStorage.setItem('listCart',JSON.stringify(list_products))
+    console.log('esta en carro?',onCart)
     onCart ? paintShoppingCart(): addProductsToCart(product)
     
-    // addHeaderCart({});
 }
 
 const addProductsToCart = (product) => {
+    console.log('Pintando el producto!!')
     
     const {id,price,name,img,cantidad} = product;
     
@@ -160,35 +159,71 @@ const addProductsToCart = (product) => {
     templateProductShop.querySelector('.product-details strong').textContent = cantidad;
     templateProductShop.querySelector('.price').textContent = price;
     templateProductShop.querySelector('.product-name a').textContent = name;
+    templateProductShop.querySelector('.btn-remove').dataset.id = id;
 
+    const headerShop = templateHeaderShop.querySelector('.top-subtotal');
+
+    if(Object.keys(headerShop.dataset).length > 0){
+        const cantidadTotal = Number(headerShop.dataset.cantidad) + Number(cantidad);
+        const priceTotal = Number(headerShop.dataset.price) + Number(price);
+        addHeaderCart(cantidadTotal,priceTotal)
+    }
+
+    const div_empty = document.querySelector('.cart__empty');
+    console.log(div_empty)
+    if(div_empty)
+    listShop.removeChild(div_empty)
     const clone = templateProductShop.cloneNode(true);
     fragment.appendChild(clone)
     listShop.appendChild(fragment)
 }
 
-function addHeaderCart({cantidad=0,total=0}){
+function addHeaderCart(cantidad=0,total=0){
+    console.log('cantidad',cantidad)
+    console.log('total',total)
+    let mensaje_total = cantidad > 0 ? cantidad > 1 ? cantidad+' productos, ':cantidad +' producto, ':'Su carrito esta vacio' 
+    let mensaje_price = total < 0 ? 'S/.--.--':`S/.${total}`
+    console.log(mensaje_price)
     
-    const div = document.createElement('div');
-    let mensaje_total = cantidad > 0 ? cantidad > 1 ? cantidad+' productos':cantidad +' producto':'Su carrito esta vacio' 
-    let mensaje_price = total > 0 ? 'S/.--.--':`S/.${total}`
-    let resultado = 
-    `<div class="top-subtotal">${mensaje_total}, 
-        <span class="price">${mensaje_price}</span> 
-    </div>`;
-    div.innerHTML = resultado;
-    header_cart.append(div)
+    // templateHeaderShop.querySelector('.top-subtotal').textContent = mensaje_total;
+    headerShop.innerHTML='';
+    templateHeaderShop.querySelector('.total').textContent = mensaje_total;
+    templateHeaderShop.querySelector('.price').textContent = mensaje_price;
+    templateHeaderShop.querySelector('.top-subtotal').dataset.price = total;
+    templateHeaderShop.querySelector('.top-subtotal').dataset.cantidad = cantidad;
+
+    
+    const clone = templateHeaderShop.cloneNode(true);
+    fragment.appendChild(clone)
+    headerShop.appendChild(fragment)
 }
 
 const paintShoppingCart = ()=>{
     const products = localStorage.getItem('listCart');
     const shopBody = document.querySelector('.shop__body')
+    let totalPrice = 0;
+    let totalProduct = 0;
     shopBody.innerHTML='';
     let list_products = JSON.parse(products)||[];
-    if(products.length>0)
-    list_products.forEach((product)=>{
-        addProductsToCart(product)
-    })
+    if(list_products.length > 0){
+        console.log('list',list_products)
+        list_products.forEach((product)=>{
+            addProductsToCart(product)
+            totalProduct += Number(product.cantidad);
+            totalPrice += Number(product.price) * Number(product.cantidad);
+        })
+        addHeaderCart(totalProduct,totalPrice)
+    }else{
+        console.log('carro vacio1!')
+        const div = document.createElement("div");
+        div.className = 'cart__empty'
+        div.innerText = 'Su carrito esta vacio !!'
+        listShop.appendChild(div)
+        addHeaderCart();
+    }
+    
 
+    
 }
 
 const removeProductOfCart= () => {

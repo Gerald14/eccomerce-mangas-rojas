@@ -6,6 +6,16 @@
     padding: 1rem 0;
 }
 
+.shop__body{
+    height: 100%;
+}
+.cart__empty{
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .product-img{
     width: 7rem;
 }
